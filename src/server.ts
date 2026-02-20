@@ -5,7 +5,8 @@ import connectDB from "./config/db";
 import authRoutes from "./routes/auth.routes";
 import classRoutes from "./routes/class.routes";
 import subjectRoutes from "./routes/subject.routes";
-
+import adminRoutes from "./routes/admin.routes";
+import eventRoutes from "./routes/event.routes"
 dotenv.config();
 connectDB();
 
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/classes", classRoutes);
 app.use("/api/subjects", subjectRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/events", eventRoutes);
 
 const PORT = process.env.PORT || 5000;
 

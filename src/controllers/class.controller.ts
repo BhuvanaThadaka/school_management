@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Class from "../models/Class";
+import Event from "../models/Event";
 
 // Create Class (Admin only)
 export const createClass = async (req: Request, res: Response) => {
@@ -36,10 +37,16 @@ export const updateClass = async (req: Request, res: Response) => {
 };
 
 // Delete Class
+
 export const deleteClass = async (req: Request, res: Response) => {
   try {
-    await Class.findByIdAndDelete(req.params.id);
-    res.json({ message: "Class deleted" });
+    const classId = req.params.id;
+
+    await Class.findByIdAndDelete(classId);
+
+    await Event.deleteMany({ classId });
+
+    res.json({ message: "Class and related events deleted" });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
